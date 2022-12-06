@@ -2,7 +2,7 @@
 
 - We have to create 5 tables
     - `customer`
-    - `order`
+    - `orders`
     - `order_details`
     - `product`
     - `category`
@@ -42,15 +42,15 @@ CREATE TABLE product
 
 <hr>
 
-- Schema of `order` table :
+- Schema of `orders` table :
     - `oid` int(12) primary key
     - `order_date` datetime not null default( getdate() )
     - `custid` int
 
 
-- Let's create `order` table
+- Let's create `orders` table
 ````SQL
-CREATE TABLE order
+CREATE TABLE orders
 (
     oid int PRIMARY KEY,
     order_date datetime not null default(getdate()),
@@ -58,7 +58,7 @@ CREATE TABLE order
 )
 ````
 > You can get an error if you want to have a table with name `order`
-as it is a `keyword` reserved in `SQL` (`ORDER BY`), so can name it `_order`
+as it is a `keyword` reserved in `SQL` (`ORDER BY`), so can name it `orders`
     
 > You can use `Now()` function instead in `MySQL`
 <hr>
@@ -69,7 +69,7 @@ as it is a `keyword` reserved in `SQL` (`ORDER BY`), so can name it `_order`
     - `order_quantity` int not null default(1)
 
 > VIP Note: we can see that we have two `Primary keys` in `order_details`
-this is because the relationship between `order` & `product` tables is
+this is because the relationship between `orders` & `product` tables is
 `Many-To-Many`, so in this case the `primary key` is called `composite primary key`
 where we cannot EVER have the same combination for example if `pid` = 1 & `oid` = 1
 we cannot have any record (row) having the same value, but we can have `pid` = 1 & `oid` is 2
@@ -78,7 +78,7 @@ or `pid` is 2 & `oid` is 1  <br>
 `1 2` YES <br>
 `2 1` YES <br>
 `1 1` NO (already exists) <br>
-Also note, as both `pid` & `oid` are primary keys in `order` & `product` tables then
+Also note, as both `pid` & `oid` are primary keys in `orders` & `product` tables then
 they are taken to `order_details` table as `foreign keys`
 So, they both are `primary key` as well as `foreign key`
 
@@ -87,7 +87,7 @@ So, they both are `primary key` as well as `foreign key`
 CREATE TABLE order_details
 (
     pid int Foreign key REFERENCES product(pid),
-    oid int Foreign key REFERENCES order(oid),
+    oid int Foreign key REFERENCES orders(oid),
     order_quantity int not null default(1),
     PRIMARY KEY(pid,oid)
 )
@@ -101,7 +101,7 @@ CREATE TABLE order_details
     oid int,
     PRIMARY KEY(pid,oid),
     Foreign key (pid) REFERENCES product(pid),
-    Foreign key (oid) REFERENCES _order(oid),
+    Foreign key (oid) REFERENCES orders(oid),
     order_quantity int not null default(1)
 )
 ````
@@ -147,9 +147,9 @@ ADD CONSTRAINT FK_product_category
 FOREIGN KEY (cid) REFERENCES category(cid);
 ````
 
-- then add `foreign key constrain` in `_order` table
+- then add `foreign key constrain` in `orders` table
 ````SQL
-ALTER TABLE _order
+ALTER TABLE orders
 ADD CONSTRAINT fk_customer_order
 FOREIGN key (custid) REFERENCES customer(custid)
 ````
