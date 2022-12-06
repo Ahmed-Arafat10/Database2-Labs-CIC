@@ -2,7 +2,6 @@
 #### By TA `Ahmed Arafat` (>‿◠)✌
 
 - We have to create 5 tables
-    - `customer`
     - `orders`
     - `order_details`
     - `product`
@@ -44,9 +43,9 @@ CREATE TABLE product
 <hr>
 
 - Schema of `orders` table :
-    - `oid` int(12) primary key
+    - `oid` primary key
     - `order_date` datetime not null default( getdate() )
-    - `custid` int
+    - `custid` int foreign key
 
 
 - Let's create `orders` table
