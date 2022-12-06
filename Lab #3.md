@@ -1,4 +1,4 @@
-# Database #2 - Lab #3
+# Database #2 - Lab #3 : Creating A `DB Schema` Then Performing `DDL`,`DML`,`DQL` & Finally `Joins`
 
 - We have to create 5 tables
     - `customer`
@@ -10,13 +10,13 @@
 <hr>
 
 - Schema of `product` table :
-  - `pid` int primary key
-  - `pname` varchar(255) not null unique
-  - `price` money not null check(price > 0)
-  - `description` varchar(500) not null
-  - `cid` int foreign key
+    - `pid` int primary key
+    - `pname` varchar(255) not null unique
+    - `price` money not null check(price > 0)
+    - `description` varchar(500) not null
+    - `cid` int foreign key
 
-> Note: `money` data type exists only in `SQL Server` not `MySQL` 
+> Note: `money` data type exists only in `SQL Server` not `MySQL`
 
 - Let's start first with `product table` `Create` command
 
@@ -59,7 +59,7 @@ CREATE TABLE orders
 ````
 > You can get an error if you want to have a table with name `order`
 as it is a `keyword` reserved in `SQL` (`ORDER BY`), so can name it `orders`
-    
+
 > You can use `Now()` function instead in `MySQL`
 <hr>
 
@@ -108,7 +108,7 @@ CREATE TABLE order_details
 <hr>
 
 - Schema of `category` table :
-    - `cid` int primary key 
+    - `cid` int primary key
     - `cname` varchar(255) not null
 
 - Let's create `order_details` table
@@ -150,8 +150,8 @@ FOREIGN KEY (cid) REFERENCES category(cid);
 - then add `foreign key constrain` in `orders` table
 ````SQL
 ALTER TABLE orders
-ADD CONSTRAINT fk_customer_order
-FOREIGN key (custid) REFERENCES customer(custid)
+    ADD CONSTRAINT fk_customer_order
+        FOREIGN key (custid) REFERENCES customer(custid)
 ````
 
 <hr>
@@ -169,3 +169,56 @@ ALTER TABLE product
 DROP FOREIGN KEY FK_product_category;
 ````
 
+<hr>
+<hr>
+
+
+### Data Manipulation Language `DML` Part
+
+- Insert in `customer` table
+````SQL
+INSERT into customer VALUES (1,'arafat',1,'arafat@gmail.com')
+INSERT into customer VALUES (2,'ahmed',1,'ahmed@gmail.com');
+````
+
+- Insert in `_order` table
+````SQL
+INSERT into _order VALUES (1,DEFAULT,1);    
+INSERT into _order VALUES (2,DEFAULT,1);    
+````
+
+
+- Insert in `category` table
+````SQL
+INSERT INTO category VALUES (1,'Drinks'),(2,'Electronics')
+````
+
+- Insert in `product` table
+````SQL
+INSERT INTO product VALUES ( 1 , 'pepsi' , 5.5 , 'needed in summer' , 1 )
+INSERT INTO product VALUES ( 2 , 'Iphone' , 19999 , 'f5amet el tofa7a' , 2);
+INSERT INTO product VALUES ( 3 , 'C++ Book' , 150 , 'intro to prog 1' , null);
+````
+
+- Insert in `order_details` table
+````SQL
+INSERT INTO order_details VALUES ( 1 , 1 , 5 ) , (2,1,3) , (3 , 2 , 10)
+````
+
+- `Inner Join` command between all tables
+````SQL
+SELECT * FROM customer
+INNER JOIN _order
+ON customer.custid = _order.custid
+
+INNER JOIN order_details
+ON _order.oid = order_details.oid
+
+INNER JOIN product
+ON order_details.pid = product.pid
+
+INNER JOIN category
+ON product.cid = category.cid;
+````
+> Note : you can just type `JOIN` instead of `INNER JOIN`, Both have same
+result which is performing an `inner join`
