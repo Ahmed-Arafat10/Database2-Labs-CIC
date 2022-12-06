@@ -1,4 +1,5 @@
 # Database #2 - Lab #3 : Creating A `DB Schema` Then Performing `DDL`,`DML`,`DQL` & Finally `Joins`
+#### By TA `Ahmed Arafat` (>‿◠)✌
 
 - We have to create 5 tables
     - `customer`
@@ -150,8 +151,8 @@ FOREIGN KEY (cid) REFERENCES category(cid);
 - then add `foreign key constrain` in `orders` table
 ````SQL
 ALTER TABLE orders
-    ADD CONSTRAINT fk_customer_order
-        FOREIGN key (custid) REFERENCES customer(custid)
+ADD CONSTRAINT fk_customer_order
+FOREIGN key (custid) REFERENCES customer(custid)
 ````
 
 <hr>
