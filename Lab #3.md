@@ -57,6 +57,10 @@ CREATE TABLE order
     custid int
 )
 ````
+> You can get an error if you want to have a table with name `order`
+as it is a `keyword` reserved in `SQL` (`ORDER BY`), so can name it `_order`
+    
+> You can use `Now()` function instead in `MySQL`
 <hr>
 
 - Schema of `order_details` table :
@@ -80,12 +84,25 @@ So, they both are `primary key` as well as `foreign key`
 
 - Let's create `order_details` table
 ````SQL
-CREATE TABLE order
+CREATE TABLE order_details
 (
-    pid int Foreign key refrences product(pid),
-    oid int Foreign key refrences order(oid),
+    pid int Foreign key REFERENCES product(pid),
+    oid int Foreign key REFERENCES order(oid),
     order_quantity int not null default(1),
     PRIMARY KEY(pid,oid)
+)
+````
+
+In `MySQL`:
+````SQL
+CREATE TABLE order_details
+(
+    pid int,
+    oid int,
+    PRIMARY KEY(pid,oid),
+    Foreign key (pid) REFERENCES product(pid),
+    Foreign key (oid) REFERENCES _order(oid),
+    order_quantity int not null default(1)
 )
 ````
 <hr>
@@ -99,7 +116,7 @@ CREATE TABLE order
 CREATE TABLE category
 (
     cid int PRIMARY KEY,
-    cname varvhar(255) not null
+    cname varchar(255) not null
 )
 ````
 <hr>
@@ -130,7 +147,16 @@ ADD CONSTRAINT FK_product_category
 FOREIGN KEY (cid) REFERENCES category(cid);
 ````
 
-- to drop `FK` constraint
+- then add `foreign key constrain` in `_order` table
+````SQL
+ALTER TABLE _order
+ADD CONSTRAINT fk_customer_order
+FOREIGN key (custid) REFERENCES customer(custid)
+````
+
+<hr>
+
+- To drop a `foreign key constrain`
 - In `SQL Server`:
 ````SQL
 ALTER TABLE product
