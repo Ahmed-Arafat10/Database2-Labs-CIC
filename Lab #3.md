@@ -1,4 +1,4 @@
-# Database #2 - Lab #3 : Creating A `DB Schema` Then Performing `DDL`,`DML`,`DQL` & Finally `Joins`
+# Database #2 - Lab #3 : Creating A `DB Schema` Then Performing `DDL`,`DML`,`DQL`(`Join`)
 #### By TA `Ahmed Arafat` (>‿◠)✌
 
 - We have to create 5 tables
