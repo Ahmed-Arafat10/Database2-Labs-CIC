@@ -2,7 +2,7 @@
 ### By TA `Ahmed Arafat` (>‿◠)✌
 
 ### Topics To Be Discussed:
-1. What are `Triggers` ?
+   1. What are `Triggers` ?
    2. What are the types of `Triggers` ?
    3. `DML` `Triggers`
    4. Example On `Triggers`
