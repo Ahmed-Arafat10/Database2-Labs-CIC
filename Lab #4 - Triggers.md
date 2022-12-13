@@ -1,27 +1,41 @@
-# Database Lab #4 - `Triggers`
+# Database Lab #4 - `Triggers In SQL Server`
 ### By TA `Ahmed Arafat` (>‿◠)✌
 
+### Topics To Be Discussed:
+1. What are `Triggers` ?
+   2. What are the types of `Triggers` ?
+   3. `DML` `Triggers`
+   4. Example On `Triggers`
+      1. `FOR` Triggers
+      2. `AFTER` Triggers
+      3. `INSTEAD OF` Triggers
+   5. `Disable`/`Drop` a Trigger
+<hr>
+<hr>
+
+### 1. What are `Triggers` ?
 - The `trigger` is a database object similar to a stored procedure that is
 executed automatically when an event occurs in a database. 
-- There are different kinds of events that can activate a `trigger` like 
-`inserting` or `deleting` rows in a table, a user logging into a database 
-server instance, an update to a table column, a table is `created`, `altered`, or `dropped`, etc.
+  - There are different kinds of events that can activate a `trigger` like 
+  `inserting` or `deleting` rows in a table, a user logging into a database 
+  server instance, an update to a table column, a table is `created`, `altered`, or `dropped`, etc.
 
-- For example, consider a scenario where the salary of an employee in the `Employee` table is updated.
-You might want to preserve the previous salary details in a separate 
-`audit table` before it gets updated to its new value. 
-You can create a `trigger` to **automatically** insert employee data 
-to the new `audit` table whenever the Employee table's value is updated.
+  - For example, consider a scenario where the salary of an employee in the `Employee` table is updated.
+  You might want to preserve the previous salary details in a separate 
+  `audit table` before it gets updated to its new value. 
+  You can create a `trigger` to **automatically** insert employee data 
+  to the new `audit` table whenever the Employee table's value is updated.
 
 <hr>
 
+### 2. What are the types of `Triggers` ?
 - There are three types of triggers in `SQL Server`
   - `DML triggers` are automatically fired when an `INSERT`, `UPDATE` or `DELETE` event occurs on a table.
   - `DDL triggers` are automatically invoked when a `CREATE`, `ALTER`, or `DROP` event occurs in a database. It is fired in response to a server scoped or database scoped event.
   - `Logon trigger` is invoked when a LOGON event is raised when a user session is established.
 
 
-## DML Triggers
+### 3. `DML` Triggers
 - `DML (Data Manipulation Language)` trigger is automatically 
 invoked when an `INSERT`, `UPDATE` or `DELETE` statement is executed on a table.
 
@@ -67,7 +81,7 @@ So, the actual `INSERT`, `UPDATE` or `DELETE` statement does not happen at all.
 
 #### 2. `DELETED Table` : Holds copies of the affected rows during a `DELETE` or `UPDATE` event, No records for the `INSERT` statements.
 
-## Example On Triggers :
+### 4. Example On `Triggers`
 <hr>
 
 - Let's create a trigger that fires on `INSERT`, `UPDATE` and `DELETE` operation on the `Employee` table.
@@ -86,7 +100,7 @@ it will increment by `1`, example : 1, 2, 3, 4, etc ...
 > In the above table, `LogID` is the serial number with `auto increment`, `UpdatedDate` is the date on which the Employee table was updated.
 The Operation column stores the type of operation made to the table, either `INSERT`, `UPDATE`, or `DELETE`.
 
-### `FOR` Triggers
+### 4.1 `FOR` Triggers
 - The `FOR` triggers can be defined on tables or views.
 It fires only when all operations specified in the triggering SQL statement have initiated successfully.
 All referential cascade actions and constraint checks must
@@ -130,9 +144,9 @@ INSERT INTO Employee(FirstName,LastName,EMail,Phone,HireDate,ManagerID,Salary,De
 
 - You can see that a new row is inserted in the `EmpLog` table for each `INSERT` statement for the `Employee` table.
 
-- >Note: For any reason, if the `FOR triggers` fails then the `INSERT` will also fail and no rows will be inserted.
+  - >Note: For any reason, if the `FOR triggers` fails then the `INSERT` will also fail and no rows will be inserted.
 
-### `AFTER` Triggers
+### 4.2 `AFTER` Triggers
 
 - The `AFTER` trigger fires only after the specified triggering SQL statement completed successfully. 
 > `AFTER` triggers cannot be defined on views.
@@ -157,13 +171,13 @@ WHERE EmployeeID = 2;
 
 <img src="Pics/4_6.png" height="auto" width="auto" alt="Fig #1">
 
-### `INSTEAD OF` Triggers
+### 4.3 `INSTEAD OF` Triggers
 - An `INSTEAD OF` trigger allows you to `override` the `INSERT`, `UPDATE`, or `DELETE` operations on a table or view.
 The actual `DML` operations do not occur at all.
 
-- The `INSTEAD OF` `DELETE` trigger executes instead of the `actual delete` event on a table or view.
-In the `Instead Of delete trigger` example below,
-when a `delete` command is issued on the `Employee` table, a new row is created in the `EmpLog` table storing the operation as `'Delete'`, **but the row doesn't get deleted**.
+  - The `INSTEAD OF` `DELETE` trigger executes instead of the `actual delete` event on a table or view.
+  In the `Instead Of delete trigger` example below,
+  when a `delete` command is issued on the `Employee` table, a new row is created in the `EmpLog` table storing the operation as `'Delete'`, **but the row doesn't get deleted**.
 
 ````sql
 CREATE TRIGGER dbo.trgInsteadOfDelete 
@@ -183,10 +197,25 @@ table instead of deleting a row in the `Employee` table.
 
 <img src="Pics/4_7.png" height="auto" width="auto" alt="Fig #1">
 
+### 5. `Disable`/`Drop` a trigger
+- To disable a `trigger` (You can Enable it later) on `Locations` table
+````sql
+DISABLE TRIGGER TR_UPD_Locations2 on Locations
+````
+
+- To disable a All `triggers`  on `Locations` table
+````sql
+DISABLE TRIGGER ALL ON Locations 
+````
+- To drop a `trigger` (permanently)
+````sql
+DROP TRIGGER TRL_UPD_Locations2 
+````
+
 ### Multiple Triggers
 - In SQL Server, multiple triggers can be created on a table for the same event. There is no defined order of execution for these triggers.
 
-- The order of the triggers can be set to `First` or `Last` using the stored procedure `sp_settriggerorder`.
+  - The order of the triggers can be set to `First` or `Last` using the stored procedure `sp_settriggerorder`.
 
 ### Reference ^-^
 [tutorialsteacher Article](https://www.tutorialsteacher.com/sqlserver/triggers)
