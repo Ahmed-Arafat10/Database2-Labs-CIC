@@ -1,3 +1,4 @@
+
 -- 6232B Demonstration 2A - Data and Domain Integrity
 
 -- Step 1: Open the Demonstration 2A Script File
@@ -25,7 +26,7 @@ LikelihoodOfJoining (value from 1 to 5 with 5 being most likely but 3 as the def
 --         that should be put in place
 
 -- Step 3: Check the outcome with this proposed solution
-
+````sql
 USE tempdb;
 GO
 
@@ -619,5 +620,4 @@ drop table state
 
 --------------------------------------------------------------------
 
-
-
+````
