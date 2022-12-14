@@ -218,4 +218,4 @@ DROP TRIGGER TRL_UPD_Locations2
   - The order of the triggers can be set to `First` or `Last` using the stored procedure `sp_settriggerorder`.
 
 ### Reference ^-^
-[tutorialsteacher Article](https://www.tutorialsteacher.com/sqlserver/triggers)
+[Click Me](https://www.tutorialsteacher.com/sqlserver/triggers)
