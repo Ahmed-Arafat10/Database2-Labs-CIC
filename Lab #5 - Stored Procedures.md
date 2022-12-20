@@ -151,3 +151,6 @@ Use the `DROP PROCEDURE` statement to delete a stored procedure
 ````sql
 DROP PROCEDURE dbo.uspGetEmployees;
 ````
+
+### Reference ^-^
+[Click Me](https://www.tutorialsteacher.com/sqlserver/stored-procedures)
