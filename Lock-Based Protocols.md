@@ -97,7 +97,7 @@ Read(A) // A=100
 A=A+20 // A=120
                             Read(A) // A=100
                             A=A+50 // A=150
-                               Write(A) // A = 150
+                            Write(A) // A = 150
 Write(A) // A = 120
 ````
 
