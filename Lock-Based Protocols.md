@@ -86,6 +86,43 @@ managed properly, where two or more transactions are stuck waiting for resources
 inactivity. Therefore, deadlock detection and resolution mechanisms are essential in lock-based concurrency control
 systems.
 
+### Example:
+
+- In case of not using lock-based protocol
+
+````
+    t1                          t2
+   
+Read(A) // A=100
+A=A+20 // A=120
+                            Read(A) // A=100
+                            A=A+50 // A=150
+                               Write(A) // A = 150
+Write(A) // A = 120
+````
+
+> now `A` will be `120` instead of `170` <br>
+> As we said before this will lead to data inconsistency
+
+- To solve this using `Exclusive (X) Lock`:
+
+````
+    t1                          t2
+    
+lock-X(A);// Acquire exclusive lock on A
+Read(A); // A=100
+A=A+20 // A=120
+                            lock-X(A);// Wait for exclusive lock on A
+                            Read(A);// Read current balance ($100) after T1's update (120)
+                            A=A+50 // A=170
+                            Write(A);// Update balance to 170
+                            unlock(A);// Release lock
+
+Write(A);// Update balance to $120
+unlock(Account);// Release lock
+````
+
+
 ### `Shared (S) mode`
 
 the Shared (S) mode refers to a type of lock that allows multiple transactions to read a resource concurrently while
@@ -106,7 +143,18 @@ like dirty reads, where a transaction reads uncommitted changes made by another 
 For instance, if Transaction T1 holds a shared lock on a data item, another transaction (T2) can also acquire a shared
 lock on the same data item, allowing both transactions to read the data concurrently. However, if any of these
 transactions want to modify the data (write operation), they would need to acquire an exclusive lock, which isn't
-possible while other transactions hold shared locks.
+possible while other transactions hold shared locks. 
+- example fo preventing Non-Repeatable Reads:
+````
+        t1                      t2
+        Lock-S(A)
+        read(A) // A=100
+                                read(A) // A=100  
+                                A=A+100 //A=200  
+                                write(A);// T2 tries to update the balance but waits due to T1's lock
+        read(A);// Reads the balance again: $100 (still under shared lock)
+        Unlock(A)
+````
 
 ### `lock compatibility matrix`
 
@@ -250,39 +298,3 @@ acquiring locks. Starvation might occur due to various reasons:
 - `Resource Utilization`: If certain transactions continuously monopolize resources, repeatedly acquiring and releasing
   locks in a way that doesn’t allow others to proceed, it can lead to starvation for transactions that require those
   resources.
-
-### Example:
-
-- In case of not using lock-based protocol
-
-````
-    t1                          t2
-   
-Read(A) // A=100
-A=A+20 // A=120
-                            Read(A) // A=100
-                            A=A+50 // A=150
-                               Write(A) // A = 150
-Write(A) // A = 120
-````
-
-> now `A` will be `120` instead of `170` <br>
-> As we said before this will lead to data inconsistency
-
-- To solve this using `Exclusive (X) Lock`:
-
-````
-    t1                          t2
-    
-lock-X(A);// Acquire exclusive lock on A
-Read(A); // A=100
-A=A+20 // A=120
-                            lock-X(A);// Wait for exclusive lock on A
-                            Read(A);// Read current balance ($100) after T1's update (120)
-                            A=A+50 // A=170
-                            Write(A);// Update balance to 170
-                            unlock(A);// Release lock
-
-Write(A);// Update balance to $120
-unlock(Account);// Release lock
-````
