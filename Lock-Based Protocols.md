@@ -119,7 +119,7 @@ A=A+20 // A=120
                             unlock(A);// Release lock
 
 Write(A);// Update balance to $120
-unlock(Account);// Release lock
+unlock(A);// Release lock
 ````
 
 
