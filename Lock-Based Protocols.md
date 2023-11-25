@@ -282,7 +282,7 @@ algorithms to detect and break deadlocks by `aborting` one of the transactions i
 These mechanisms aim to prevent indefinite waiting and ensure the system can continue to function by resolving deadlocks
 as they occur.
 
-### `starvation`
+### `Starvation`
 
 Starvation refers to a scenario in a system where a transaction, process, or entity is unable to make progress because
 it's persistently bypassed or delayed by other transactions or processes. In the context of lock-based protocols in
