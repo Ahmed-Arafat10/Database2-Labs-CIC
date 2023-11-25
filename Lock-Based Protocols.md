@@ -1,3 +1,5 @@
+## Written By Ahmed Arafat
+
 ### Let's recap on important Terminologies
 
 - `Transaction` : A transaction in a database is a logical unit of work that comprises one or more database operations,
